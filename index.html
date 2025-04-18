@@ -1,0 +1,73 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Campus Safety Report</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Campus Safety Report</h1>
+    <p>Stay informed. Stay safe.</p>
+  </header>
+
+  <main>
+    <section id="alerts">
+      <h2>Live Safety Alerts</h2>
+      <div id="alerts-container">
+        <p>Loading alerts...</p>
+      </div>
+    </section>
+
+    <section id="report">
+      <h2>Report an Incident</h2>
+      <form id="reportForm">
+        <h2>Reported Incidents</h2>
+        <ul id="incidentList"></ul>
+        <label for="type">Type of Incident:</label>
+        <select id="type" required>
+          <option value="">Select</option>
+          <option value="Theft">Theft</option>
+          <option value="Harassment">Harassment</option>
+          <option value="Suspicious Activity">Suspicious Activity</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <button type="submit">Report Incident</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+<script type="module" src="firebase-setup.js"></script>
+<script type="module" src="script.js">
+  const firebaseConfig = {
+  apiKey: "AIzaSyDht8QvipgHS9fWHsEbkSyVO-72s4StTpo",
+  authDomain: "campussafetyreport-a014e.firebaseapp.com",
+  projectId: "campussafetyreport-a014e",
+  storageBucket: "campussafetyreport-a014e.firebasestorage.app",
+  messagingSenderId: "356245823678",
+  appId: "1:356245823678:web:3f51fc67b760fb597bfeef",
+  measurementId: "G-N1T5V9DLGM"
+};
+
+ const incidentList = document.getElementById("incidentList");
+
+ function loadIncidents() {
+  db.collection("incidents").orderBy("time", "desc").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      incidentList.innerHTML = ""; // Clear old list
+      const data = doc.data();
+      const li = document.createElement("li");
+      li.textContent = `📍 ${data.type} at ${data.location} on ${new Date(data.time).toLocaleString()}`;
+      incidentList.appendChild(li);
+    });
+  });
+}
+
+ loadIncidents();
+</script>
+
+
+</body>
+</html>
