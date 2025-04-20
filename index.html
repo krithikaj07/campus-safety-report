@@ -1,7 +1,8 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Campus Safety Report</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -9,65 +10,68 @@
   <header>
     <h1>Campus Safety Report</h1>
     <p>Stay informed. Stay safe.</p>
+    <button id="emergency-btn">Emergency Contacts</button>
   </header>
 
   <main>
     <section id="alerts">
-      <h2>Live Safety Alerts</h2>
+      <h2>🚨 Live Safety Alerts</h2>
       <div id="alerts-container">
         <p>Loading alerts...</p>
       </div>
     </section>
 
     <section id="report">
-      <h2>Report an Incident</h2>
+      <h2>📝 Report an Incident</h2>
       <form id="reportForm">
-        <h2>Reported Incidents</h2>
-        <ul id="incidentList"></ul>
         <label for="type">Type of Incident:</label>
         <select id="type" required>
           <option value="">Select</option>
           <option value="Theft">Theft</option>
           <option value="Harassment">Harassment</option>
           <option value="Suspicious Activity">Suspicious Activity</option>
+          <option value="Medical Emergency">Medical Emergency</option>
           <option value="Other">Other</option>
         </select>
 
+        <label for="location">Location Description:</label>
+        <input type="text" id="location" placeholder="Building name or landmark (optional)">
+
+        <label for="details">Additional Details:</label>
+        <textarea id="details" rows="3" placeholder="Provide more information..."></textarea>
+
         <button type="submit">Report Incident</button>
+        <p id="report-status" style="color: green; display: none;">Incident successfully reported!</p>
       </form>
+
+      <h2>📋 Reported Incidents</h2>
+      <ul id="incidents-list"></ul>
+    </section>
+
+    <section id="safety-tips">
+      <h2>💡 Safety Tips For Your Area</h2>
+      <div id="tips-container">
+        <p>Enable location services to get personalized safety tips.</p>
+      </div>
+    </section>
+
+    <section id="nearby-events">
+      <h2>🎪 Nearby Campus Events</h2>
+      <div id="events-container">
+        <p>Checking for nearby events...</p>
+      </div>
     </section>
   </main>
 
-  <script src="script.js"></script>
-<script type="module" src="firebase-setup.js"></script>
-<script type="module" src="script.js">
-  const firebaseConfig = {
-  apiKey: "AIzaSyDht8QvipgHS9fWHsEbkSyVO-72s4StTpo",
-  authDomain: "campussafetyreport-a014e.firebaseapp.com",
-  projectId: "campussafetyreport-a014e",
-  storageBucket: "campussafetyreport-a014e.firebasestorage.app",
-  messagingSenderId: "356245823678",
-  appId: "1:356245823678:web:3f51fc67b760fb597bfeef",
-  measurementId: "G-N1T5V9DLGM"
-};
+  <div id="emergency-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>🚑 Emergency Contacts</h3>
+      <ul id="emergency-contacts"></ul>
+    </div>
+  </div>
 
- const incidentList = document.getElementById("incidentList");
-
- function loadIncidents() {
-  db.collection("incidents").orderBy("time", "desc").get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      incidentList.innerHTML = ""; // Clear old list
-      const data = doc.data();
-      const li = document.createElement("li");
-      li.textContent = `📍 ${data.type} at ${data.location} on ${new Date(data.time).toLocaleString()}`;
-      incidentList.appendChild(li);
-    });
-  });
-}
-
- loadIncidents();
-</script>
-
-
+  <script type="module" src="firebase-setup.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
