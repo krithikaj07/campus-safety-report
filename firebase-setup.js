@@ -1,19 +1,22 @@
 // firebase-setup.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDht8QvipgHS9fWHsEbkSyVO-72s4StTpo",
-  authDomain: "campussafetyreport-a014e.firebaseapp.com",
-  projectId: "campussafetyreport-a014e",
-  storageBucket: "campussafetyreport-a014e.firebasestorage.app",
-  messagingSenderId: "356245823678",
-  appId: "1:356245823678:web:3f51fc67b760fb597bfeef",
-  measurementId: "G-N1T5V9DLGM"
+  apiKey: "AIzaSyD7xNCBjZHVgCO9RW-Bk9DghVS7UXLkzuY",
+  authDomain: "lifesafe-8c188.firebaseapp.com",
+  projectId: "lifesafe-8c188",
+  storageBucket: "lifesafe-8c188.firebasestorage.app",
+  messagingSenderId: "388999461320",
+  appId: "1:388999461320:web:5c33485e2b18d5c66c68fd",
+  measurementId: "G-L2ZPG16XDG"
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const analytics = getAnalytics(app);
+const auth = getAuth(app); // Initialize Firebase Authentication
+const db = getFirestore(app); // Initialize Firestore
 
-export { db, collection, addDoc };
+export { app, analytics, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, db, collection, addDoc };

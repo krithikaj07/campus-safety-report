@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSafe - Create Account</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ... (your existing create-account.html styles) ... */
+    </style>
+</head>
+<body>
+    <div class="create-account-container">
+        <h2>Create Account</h2>
+        <form id="createAccountForm">
+            <div class="form-group">
+                <label for="createEmail">Email:</label>
+                <input type="email" id="createEmail" name="createEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="createPassword">Create Password:</label>
+                <input type="password" id="createPassword" name="createPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="verifyPassword">Verify Password:</label>
+                <input type="password" id="verifyPassword" name="verifyPassword" required>
+            </div>
+            <p id="password-match-error">Passwords do not match!</p>
+            <button type="submit">Create Account</button>
+            <p id="account-status" style="color: green; display: none;">Account created successfully!</p>
+            <p id="account-error" style="color: red; display: none;">Error creating account. Please try again.</p>
+        </form>
+        <div class="login-link">
+            <a href="login.html">Back to Login</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, createUserWithEmailAndPassword } from './firebase-setup.js';
+
+        document.getElementById('createAccountForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const email = document.getElementById('createEmail').value;
+            const password = document.getElementById('createPassword').value;
+            const verifyPassword = document.getElementById('verifyPassword').value;
+            const passwordMatchError = document.getElementById('password-match-error');
+            const accountStatus = document.getElementById('account-status');
+            const accountError = document.getElementById('account-error');
+
+            if (password === verifyPassword) {
+                passwordMatchError.style.display = 'none';
+
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    console.log('Account created successfully:', user);
+                    accountStatus.style.display = 'block';
+                    accountError.style.display = 'none';
+                    document.getElementById('createAccountForm').reset(); // Clear the form
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    console.error('Account creation failed:', error.code, error.message);
+                    accountError.textContent = 'Account creation failed: ' + error.message;
+                    accountError.style.display = 'block';
+                    accountStatus.style.display = 'none';
+                }
+            } else {
+                passwordMatchError.style.display = 'block';
+                accountStatus.style.display = 'none';
+                accountError.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

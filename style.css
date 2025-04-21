@@ -1,4 +1,4 @@
-/* General Styles */
+/* style.css */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Segoe UI Emoji', 'Apple Color Emoji';
   line-height: 1.6;
@@ -6,15 +6,23 @@ body {
   padding: 0;
   background-color: #f0f4f8;
   color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('images/gsu_back.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-/* Header Styles */
 header {
   background-color: #0077cc;
   color: white;
   text-align: center;
   padding: 1.5rem 0;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
 }
 
 h1 {
@@ -43,10 +51,9 @@ header p {
   background-color: #cc0000;
 }
 
-/* Main Content Styles */
 main {
   max-width: 1000px;
-  margin: 2rem auto;
+  margin: 0 auto;
   padding: 0 1rem;
 }
 
@@ -65,14 +72,13 @@ h2 {
   padding-bottom: 0.5rem;
 }
 
-/* Form Styles */
 form label {
   display: block;
   margin: 1rem 0 0.5rem;
   font-weight: bold;
 }
 
-form select, 
+form select,
 form input[type="text"],
 form textarea {
   width: 100%;
@@ -104,7 +110,6 @@ form button[type="submit"]:hover {
   background-color: #005fa3;
 }
 
-/* Lists and Alerts */
 ul {
   padding-left: 1.5rem;
 }
@@ -130,7 +135,6 @@ ul {
   border-left: 4px solid #0077cc;
 }
 
-/* Modal Styles */
 .modal {
   display: none;
   position: fixed;
@@ -170,24 +174,198 @@ ul {
   border-bottom: 1px solid #eee;
 }
 
-/* Responsive Design */
+.login-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 400px;
+  margin: 20px;
+}
+
+.login-container h2 {
+  color: #0077cc;
+  margin-bottom: 20px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.login-container .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.login-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+  width: calc(100% - 12px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.login-container button[type="submit"] {
+  background-color: #0077cc;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.login-container button[type="submit"]:hover {
+  background-color: #005fa3;
+}
+
+.login-container .forgot-password {
+  margin-top: 15px;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.login-container .forgot-password a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.login-container .forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.create-account-link {
+    margin-top: 15px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.create-account-link a {
+    color: #28a745; /* Green color to match the button on create account page */
+    text-decoration: none;
+}
+
+.create-account-link a:hover {
+    text-decoration: underline;
+}
+
+.create-account-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    margin: 20px auto;
+}
+
+.create-account-container h2 {
+    color: #0077cc;
+    margin-bottom: 20px;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.create-account-container .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.create-account-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.create-account-container input[type="email"],
+.create-account-container input[type="password"] {
+    width: calc(100% - 12px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.create-account-container button[type="submit"] {
+    background-color: #28a745; /* Green color for create account button */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.create-account-container button[type="submit"]:hover {
+    background-color: #1e7e34;
+}
+
+#password-match-error {
+    color: red;
+    margin-top: 5px;
+    font-size: 0.9em;
+    display: none;
+}
+
+.create-account-container .login-link {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.create-account-container .login-link a {
+    color: #0077cc;
+    text-decoration: none;
+}
+
+.create-account-container .login-link a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
+  body {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
   main {
     margin: 1rem;
     padding: 0;
   }
-  
+
   section {
     padding: 1rem;
   }
-  
+
   .modal-content {
     width: 90%;
     margin: 30% auto;
   }
+
+  .login-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  .create-account-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+  }
 }
 
-/* Emoji Styles */
 .emoji {
   font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji';
   font-size: 1.2em;
