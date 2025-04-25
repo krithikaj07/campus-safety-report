@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Contacts</title>
+    <link rel="stylesheet" href="style.css"> <style>
+        .emergency-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        .contact-list li {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            line-height: 1.6;
+        }
+
+        .contact-list li strong {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .contact-list li span {
+            color: #555;
+        }
+
+        .back-to-main {
+            text-align: center;
+        }
+
+        .back-to-main a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+
+        .back-to-main a:hover {
+            text-decoration: underline;
+        }
+         body {
+            background-color: #f0f0f0; /* Light grey background */
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove default body margin */
+            padding: 0;
+        }
+
+        header {
+            background-color: #0077cc; /* Blue header */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            margin-bottom: 0;
+        }
+
+
+        main {
+            padding: 1rem;
+            min-height: calc(100vh - 140px); /* Ensure main takes up full height minus header/footer */
+        }
+
+        footer {
+            background-color: #333; /* Dark footer */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>LifeSafe</h1>
+        <p>Your Safety, Our Priority</p>
+    </header>
+    <main>
+        <div class="emergency-container">
+            <h2>Emergency Contact Numbers</h2>
+            <ul class="contact-list">
+                <li>
+                    <strong>Georgia State University Campus Police:</strong>
+                    <span>404-413-3333</span>
+                </li>
+                <li>
+                    <strong>Non-Emergencies & Safety Escorts:</strong>
+                    <span>404-413-2100</span>
+                </li>
+                <li>
+                    <strong>Information Desk:</strong>
+                    <span>404-413-3234</span>
+                </li>
+                <li>
+                    <strong>Hearing Impaired:</strong>
+                    <span>404-413-3203</span>
+                </li>
+            </ul>
+            <div class="back-to-main">
+                <a href="index.html">Back to Main</a>
+            </div>
+        </div>
+    </main>
+     <footer>
+        <p>&copy; 2024 LifeSafe. All rights reserved.</p>
+    </footer>
+</body>
+</html>
