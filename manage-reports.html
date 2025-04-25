@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeSafe - Review Reports</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ... (Your CSS Styles) ... */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>LifeSafe</h1>
+        <p>Review Incident Reports</p>
+    </header>
+    <main>
+        </main>
+    <footer>
+        </footer>
+    <script type="module">
+        // Import the required Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js';
+        import { getFirestore, collection, getDocs, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js';
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyD7xNCBjZHVgCO9RW-Bk9DghVS7UXLkzuY",
+            authDomain: "lifesafe-8c188.firebaseapp.com",
+            projectId: "lifesafe-8c188",
+            storageBucket: "lifesafe-8c188.firebasestorage.app",
+            messagingSenderId: "388999461320",
+            appId: "1:388999461320:web:5c33485e2b18d5c66c68fd",
+            measurementId: "G-L2ZPG16XDG"
+        };
+        const app = initializeApp(firebaseConfig);
+
+        const db = getFirestore();
+        const auth = getAuth();
+        const reportList = document.getElementById('report-list');
+        const noReportsMessage = document.getElementById('no-reports-message');
+
+        // Function to fetch and display reports
+        async function fetchAndDisplayReports() {
+            try {
+                const reportsCollection = collection(db, 'reports');
+                const reportSnapshot = await getDocs(reportsCollection);
+
+                if (reportSnapshot.empty) {
+                    noReportsMessage.style.display = 'block';
+                    reportList.style.display = 'none';
+                    return;
+                }
+
+                noReportsMessage.style.display = 'none';
+                reportList.style.display = 'block';
+                reportList.innerHTML = '';
+
+                reportSnapshot.forEach(doc => {
+                    const reportData = doc.data();
+                    const timestamp = reportData.timestamp ? reportData.timestamp.toDate() : new Date();
+                    const formattedDate = timestamp.toLocaleString();
+
+                    reportList.innerHTML += `
+                        <li class="report-item">
+                            <div class="report-item-info">
+                                <p><strong>Report Number:</strong> ${doc.id}</p>
+                                <p><strong>Location:</strong> ${reportData.location}</p>
+                                <p><strong>Description:</strong> ${reportData.description}</p>
+                                 <p><strong>Date/Time:</strong> ${formattedDate}</p>
+                            </div>
+                            <div class="report-actions">
+                                <label><input type="checkbox" data-report-id="${doc.id}" data-action="confirm" ${reportData.confirm ? 'checked' : ''}> Confirm</label>
+                                <label><input type="checkbox" data-report-id="${doc.id}" data-action="deny" ${reportData.deny ? 'checked' : ''}> Deny</label>
+                                <label><input type="checkbox" data-report-id="${doc.id}" data-action="resolve" ${reportData.resolve ? 'checked' : ''}> Resolve</label>
+                            </div>
+                        </li>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error fetching reports:', error);
+                reportList.innerHTML = `<li class="report-item">Error fetching reports: ${error.message}</li>`;
+            }
+        }
+
+        // Check for admin status and fetch reports
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                try {
+                    const idTokenResult = await user.getIdTokenResult();
+                    const isAdmin = idTokenResult.claims.isAdmin;
+
+                    if (isAdmin) {
+                        fetchAndDisplayReports();
+                    } else {
+                        reportList.innerHTML = `<li class="report-item">Unauthorized Access: You are not an administrator.</li>`;
+                        reportList.style.display = 'block';
+                        noReportsMessage.style.display = 'none';
+                        console.warn("Unauthorized access: User is not an admin.");
+                        window.location.href = "index.html";
+                    }
+                } catch (error) {
+                    console.error("Error checking admin status: ", error);
+                    reportList.innerHTML = `<li class="report-item">Error checking admin status: ${error.message}</li>`;
+                    reportList.style.display = 'block';
+                    noReportsMessage.style.display = 'none';
+                }
+            } else {
+                // User is not signed in, redirect to login
+                console.log("User not signed in. Redirecting to login.");
+                window.location.href = "login.html";
+            }
+        });
+
+       reportList.addEventListener('change', async (event) => {
+            if (event.target.type === 'checkbox') {
+                const reportId = event.target.dataset.reportId;
+                const action = event.target.dataset.action;
+                const isChecked = event.target.checked;
+
+                console.log(`Report ID: ${reportId}, Action: ${action}, Checked: ${isChecked}`);
+
+                try {
+                    const reportRef = doc(db, 'reports', reportId);
+                    const updateData = {};
+                    updateData[action] = isChecked;
+                    await updateDoc(reportRef, updateData);
+
+                    console.log(`Report ${action} status updated for report ID: ${reportId}`);
+                    fetchAndDisplayReports();
+                } catch (error) {
+                    console.error(`Error updating report ${action} status:`, error);
+                    alert(`Failed to update report status. Please try again.  Error: ${error.message}`);
+                    event.target.checked = !isChecked;
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

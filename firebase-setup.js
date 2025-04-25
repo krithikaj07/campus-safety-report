@@ -1,8 +1,8 @@
 // firebase-setup.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyD7xNCBjZHVgCO9RW-Bk9DghVS7UXLkzuY",
@@ -15,8 +15,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app); // Initialize Firebase Authentication
-const db = getFirestore(app); // Initialize Firestore
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-export { app, analytics, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, db, collection, addDoc };
+
+export { app, db, collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, getDocs, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged };
